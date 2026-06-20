@@ -1,0 +1,270 @@
+app:
+  description: AI-powered HR assistant that supports recruitment, job description
+    creation, interview preparation, onboarding, employee queries, HR documentation,
+    and policy guidance. Designed to provide professional HR support and streamline
+    HR processes.
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: HR Recruitment & Employee Assistant
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openrouter:0.0.54@fea0bb6f5208e9c654bd8114c93582760994a7406355512c3381bd8b723498b7
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - custom
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '👋 Welcome to HR Recruitment & Employee Assistant.
+
+
+      I can help you with:
+
+      • Job Description creation
+
+      • Resume screening
+
+      • Interview questions
+
+      • HR emails
+
+      • Onboarding plans
+
+      • HR policies and employee support
+
+
+      Upload a resume or ask a question to get started.
+
+      Generate HR interview questions
+
+      Create onboarding checklist
+
+      Draft offer letter
+
+      Explain leave policy
+
+      Generate employee engagement ideas
+
+      '
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - Create JD for HR Executive
+    - Screen my uploaded resume
+    - Generate recruiter interview questions
+    - Create onboarding checklist
+    - Explain leave policy
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1781854822193-source-answer-target
+      source: '1781854822193'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1781795374800-source-1781857806945-target
+      source: '1781795374800'
+      sourceHandle: source
+      target: '1781857806945'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1781857806945-source-1781854822193-target
+      source: '1781857806945'
+      sourceHandle: source
+      target: '1781854822193'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: User Input
+        type: start
+        variables: []
+      height: 71
+      id: '1781795374800'
+      position:
+        x: -131.59536593987923
+        y: 204.5740393362235
+      positionAbsolute:
+        x: -131.59536593987923
+        y: 204.5740393362235
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1781854822193.text#}}'
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 101
+      id: answer
+      position:
+        x: 755.7586429579985
+        y: 637.1082579330476
+      positionAbsolute:
+        x: 755.7586429579985
+        y: 637.1082579330476
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        default_value:
+        - key: text
+          type: string
+          value: ''
+        error_strategy: default-value
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: openrouter/auto
+          provider: langgenius/openrouter/openrouter
+        prompt_template:
+        - id: a83a8f1c-8f69-4f5d-bef7-34fdaf798263
+          role: system
+          text: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        structured_output_enabled: false
+        title: LLM 2
+        type: llm
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 151
+      id: '1781854822193'
+      position:
+        x: 585.4256539326567
+        y: 362.3713180427637
+      positionAbsolute:
+        x: 585.4256539326567
+        y: 362.3713180427637
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        dataset_ids:
+        - xk/4LFi0asvGfuhOhdiv9pT5IYbd4IeViGiyLSm/xIAhTJteE8oarOYKgz5qEMsN
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          top_k: 4
+        query_attachment_selector: []
+        query_variable_selector:
+        - '1781795374800'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: Knowledge Retrieval 2
+        type: knowledge-retrieval
+      height: 50
+      id: '1781857806945'
+      position:
+        x: 39.06045044504191
+        y: 434.2386239896851
+      positionAbsolute:
+        x: 39.06045044504191
+        y: 434.2386239896851
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: 850.7841783908424
+      y: 778.4637022129637
+      zoom: 0.36450465859265896
+  rag_pipeline_variables: []
